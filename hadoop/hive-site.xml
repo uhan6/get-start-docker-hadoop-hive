@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl" ?>
+
+<configuration>
+	<property>
+		<name>system:java.io.tmpdir</name>
+		<value>/tmp/hive/java</value>
+	</property>
+	<property>
+		<name>system:user.name</name>
+		<value>${user.name}</value>
+	</property>
+	<!-- JDBC -->
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:mysql://hive_mysql:3306/metastore</value>
+		<description>metadata is stored in a MySQL server</description>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>com.mysql.jdbc.Driver</value>
+		<description>MySQL JDBC driver class</description>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionUserName</name>
+		<value>hive</value>
+		<description>user name for connecting to mysql server</description>
+	</property>
+	<property>
+		<name>javax.jdo.option.ConnectionPassword</name>
+		<value>dev</value>
+		<description>password for connecting to mysql server</description>
+	</property>
+	<!-- HIVE USER -->
+	<property>
+		<name>hadoop.proxyuser.deco.hosts</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.deco.groups</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hive.server2.enable.doAs</name>
+		<value>false</value>
+		<description>
+		  Setting this property to true will have HiveServer2 execute
+		  Hive operations as the user making the calls to it.
+		</description>
+	</property>
+</configuration>
