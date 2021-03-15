@@ -13,7 +13,7 @@
 	<!-- JDBC -->
 	<property>
 		<name>javax.jdo.option.ConnectionURL</name>
-		<value>jdbc:mysql://hive_mysql:3306/metastore</value>
+		<value>jdbc:mysql://hive-meta-mysql:3306/metastore</value>
 		<description>metadata is stored in a MySQL server</description>
 	</property>
 	<property>

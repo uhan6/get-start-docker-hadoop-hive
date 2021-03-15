@@ -34,9 +34,8 @@ RUN echo $'export JAVA_HOME=/usr/local/jdk1.8.0_281 \n\
     export YARN_NODEMANAGER_USER="root"' > $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
 # master add workers
-RUN echo $'hadoop0 \n\
-    hadoop1\n\
-    hadoop2\n' > $HADOOP_HOME/etc/hadoop/workers
+RUN echo $'hadoop-master \n\
+    hadoop-worker\n' > $HADOOP_HOME/etc/hadoop/workers
 
 
 ### Hive 3.1.2
