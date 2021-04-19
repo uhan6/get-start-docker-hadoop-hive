@@ -39,11 +39,11 @@ FLUSH PRIVILEGES;
 docker exec -it hadoop-master /bin/bash
 
 # run hadoop
-/usr/local/hadoop-3.2.2/sbin/start-all.sh
+$HADOOP_HOME/sbin/start-all.sh
 # replace by run start-all.sh
 # hdfs namenode -format
-# /usr/local/hadoop-3.2.2/sbin/start-dfs.sh
-# /usr/local/hadoop-3.2.2/sbin/start-yarn.sh
+# $HADOOP_HOME/sbin/start-dfs.sh
+# $HADOOP_HOME/sbin/start-yarn.sh
 
 # create folder for hive
 hadoop fs -mkdir -p /tmp
