@@ -3,13 +3,13 @@
 ## 1. Before build
 Download resources to ./resources
 
-1. [Oracle JDK 8 1.8.281](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) ~~[OpenJDK 15 Linux / x64](https://jdk.java.net/15/)~~
+1. [Oracle JDK 8 1.8.281](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
 2. [Hadoop 3.2.2](https://hadoop.apache.org/releases.html)
 3. [Hive 3.1.2](https://hive.apache.org/downloads.html)
 
 ## 2. Docker build
 ```sh
-./docker-build
+./docker-build.sh
 ```
 
 ## 3. Docker run
@@ -17,9 +17,23 @@ Download resources to ./resources
 # create network bridge once if haven't create
 docker network create hadoop
 
-docker run --name hive-meta-mysql --network hadoop -e MYSQL_ROOT_PASSWORD=dev -p 33060:3306 -d mysql:5.7 
-docker run --name hadoop-master --network hadoop -p 8088:8088 -p 9870:9870 -p 10000:10000 -d uhan6/hadoop-master:0.1.1
-docker run --name hadoop-worker --network hadoop -d uhan6/hadoop-worker:0.1.1
+docker run --name hive-meta-mysql               \
+    --network hadoop                            \
+    -e MYSQL_ROOT_PASSWORD=dev                  \
+    -v hive-meta-mysql-volume:/var/lib/mysql    \
+    -d                                          \
+    mysql:5.7
+docker run --name hadoop-master                 \
+    --network hadoop                            \
+    -p 8088:8088 -p 9870:9870 -p 10000:10000    \
+    -v hadoop-app-volume:/app                \
+    -d                                          \
+    uhan6/hadoop-master:0.1.2
+docker run --name hadoop-worker     \
+    --network hadoop                \
+    -v hadoop-app-volume:/app    \
+    -d                              \
+    uhan6/hadoop-worker:0.1.2
 ```
 
 ## 4. Setting Hive mysql metastore

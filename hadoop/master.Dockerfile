@@ -8,6 +8,7 @@ RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 RUN cat ~/.ssh/id_rsa >> /etc/ssh/ssh_host_rsa_key
 RUN cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 RUN chmod 0600 /etc/ssh/ssh_host_rsa_key
+RUN chmod 0600 ~/.ssh/authorized_keys
 
 ### JDK 8
 ADD resources/jdk-8u281-linux-x64.tar.gz /usr/local/
@@ -33,6 +34,9 @@ RUN echo $'export JAVA_HOME=/usr/local/jdk1.8.0_281 \n\
     export YARN_RESOURCEMANAGER_USER="root"\n\
     export YARN_NODEMANAGER_USER="root"' > $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
+ENV HADOOP_CONF_DIR $HADOOP_HOME/etc/hadoop
+ENV YARN_CONF_DIR $HADOOP_HOME/etc/hadoop
+
 # master add workers
 RUN echo $'hadoop-master \n\
     hadoop-worker\n' > $HADOOP_HOME/etc/hadoop/workers
@@ -50,9 +54,6 @@ ADD hadoop/hive-site.xml $HIVE_HOME/conf/hive-site.xml
 RUN echo $'export HADOOP_HOME=/usr/local/hadoop-3.2.2 \n\
     export HIVE_CONF_DIR=$HIVE_HOME/conf' > $HIVE_HOME/conf/hive-env.sh
 
-
-# master expose
-EXPOSE 22 8088 9870 10000
 
 # sshd
 CMD ["/usr/sbin/sshd", "-D"]
